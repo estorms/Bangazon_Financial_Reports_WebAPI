@@ -11,7 +11,6 @@ namespace BangazonFinancialReportsAPI
             : base(options)
         { }
 
-        //This is where we are building the database, using the DbContext method of DbSet. DbSet exists in memory, not in database yet
         public DbSet<Revenue> Revenue { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
