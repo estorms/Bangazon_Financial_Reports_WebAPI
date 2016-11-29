@@ -11,13 +11,14 @@ namespace BangazonFinancialReportsAPI
             : base(options)
         { }
 
+
+
         public DbSet<Revenue> Revenue { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Revenue>();
+        // protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // {
+        //     modelBuilder.Entity<Revenue>();
+        // }
 
-        }
     }
-
 }

@@ -28,7 +28,7 @@ namespace BangazonFinancialReportsAPI
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
-
+// /Users/elizabethsanger/workspace/Bangazon-Financials/BangazonFinancialReports.db
             host.Run();
 
         }
