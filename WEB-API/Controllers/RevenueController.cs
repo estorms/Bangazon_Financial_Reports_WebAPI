@@ -38,57 +38,56 @@ namespace BangazonFinancialReportsAPI
 
         }
 
+
         // [HttpGet]
-        // public IActionResult GetRevenueByProduct()
+        // public IActionResult Get({userChoice}, [FromRoute])
         // {
         //     if (!ModelState.IsValid)
         //     {
         //         return BadRequest(ModelState);
         //     }
-      
 
         //     try
         //     {
-        //         IQueryable<object> ProductRevenue = from revenue in context.Revenue.Include(x =>x.ProductCost).Include(x => x.ProductRevenue)
-        //         .OrderBy(x => x.ProductRevenue) select revenue;
-            
+        //         Revenue revenue = context.Revenue.Single(m => m.ProductId == id);
 
-        //         if (ProductRevenue == null)
+        //         if (revenue == null)
         //         {
         //             return NotFound();
         //         }
 
-        //         return Ok(ProductRevenue);
+        //         return Ok(revenue);
         //     }
         //     catch (System.InvalidOperationException ex)
         //     {
         //         return NotFound();
         //     }
         // }
+      [HttpGet("{id}", Name = "GetREvenue")]
+        public IActionResult Get([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-    //         [HttpGet]
-    //     public IActionResult GetRevenueByCustomer()
-    //     {
-    //         if (!ModelState.IsValid)
-    //         {
-    //             return BadRequest(ModelState);
-    //         }
+            try
+            {
+                Revenue revenue = context.Revenue.Single(m => m.Id == id);
 
-    //         try
-    //         {
-    //             Revenue revenue = context.Revenue.Single(m => m.ProductId == id);
+                if (revenue == null)
+                {
+                    return NotFound();
+                }
+                
+                return Ok(revenue);
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                return NotFound();
+            }
 
-    //             if (revenue == null)
-    //             {
-    //                 return NotFound();
-    //             }
 
-    //             return Ok(revenue);
-    //         }
-    //         catch (System.InvalidOperationException ex)
-    //         {
-    //             return NotFound();
-    //         }
-    //     }
+        }
     }
 }
