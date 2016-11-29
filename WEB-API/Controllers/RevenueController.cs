@@ -53,8 +53,8 @@ namespace BangazonFinancialReportsAPI
             {
                 var ProdsRevenue =
                 from revenue in BangazonRevenue
-                group revenue by revenue.ProductName into products
-                select new {product = products.Key};
+                
+                select new {revenue.ProductCost, revenue.ProductName};
 
             
         
