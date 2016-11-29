@@ -59,7 +59,23 @@ namespace BangazonFinancialReportsAPI
             Console.WriteLine("Configure");
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            app.UseMvc();
+            // app.UseMvc();
+                    //this is configuring the URL as controller/
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Revenue}/{action=Index}/{id?}");
+               
+                routes.MapRoute("ProductRevenue", "revenue/{ProductRevenue}",
+                defaults: new { controller = "Revenue", action = "ProductRevenue" });
+
+                // routes.MapRoute(
+                    // name: "ProductRevenue",
+                    // template: "{controller=Revenue}/{action=ProductRevenue}");
+                
+            });
+
         }
     }
 }

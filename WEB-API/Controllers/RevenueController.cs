@@ -10,7 +10,6 @@ namespace BangazonFinancialReportsAPI
 
 {
     [Produces("application/json")]
-    [Route("[controller]")]
     public class RevenueController : Controller
     {
 
@@ -25,7 +24,7 @@ namespace BangazonFinancialReportsAPI
 
         [HttpGet]
 
-        public IActionResult Get()
+        public IActionResult Index()
         {
             IQueryable<Revenue> AllRevenue = from revenue in context.Revenue select revenue;
 
@@ -39,32 +38,61 @@ namespace BangazonFinancialReportsAPI
         }
 
 
-        // [HttpGet]
-        // public IActionResult Get({userChoice}, [FromRoute])
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
+        [HttpGet]
+        public IActionResult ProductRevenue()
+        {
 
-        //     try
-        //     {
-        //         Revenue revenue = context.Revenue.Single(m => m.ProductId == id);
+            Revenue testRevenue = new Revenue {
+                ProductName = "Tough Luck",
+                ProductCost = 5,
+            };
 
-        //         if (revenue == null)
-        //         {
-        //             return NotFound();
-        //         }
+            var BangazonRevenue = context.Revenue;
 
-        //         return Ok(revenue);
-        //     }
-        //     catch (System.InvalidOperationException ex)
-        //     {
-        //         return NotFound();
-        //     }
-        // }
-      [HttpGet("{id}", Name = "GetREvenue")]
-        public IActionResult Get([FromRoute] int id)
+            try
+            {
+                var ProdsRevenue =
+                from revenue in BangazonRevenue
+                group revenue by revenue.ProductName into products
+                select new {product = products.Key};
+
+            
+        
+                // orderby t.ProductCost
+                // orderby ProductNames
+                
+
+          
+// from Revenue
+    
+//             group by Revenue.ProductName
+//             order by sum(Revenue.ProductRevenue) desc",  
+    
+                // IQueryable<string> ProductNames = from revenue in context.Revenue select revenue.ProductName;
+                // IQueryable<int>ProductCosts = from revenue in context.Revenue select revenue.ProductCost;
+            // .Include(x => x.ProductRevenue)
+            //     .OrderBy(x => x.ProductRevenue)
+                
+                // Dictionary <string, int> ProdsRevenue = new Dictionary<string, int>();
+                // ProdsRevenue.Add(ProductNames.ToString(), Convert.ToInt32(ProductCosts));
+
+                if (ProdsRevenue == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(ProdsRevenue);
+            }
+
+            catch (System.InvalidOperationException ex)
+            {
+                return NotFound();
+
+            }
+        }
+          
+      [HttpGet("{id}", Name = "GetIndividualRevenue")]
+        public IActionResult Index([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
