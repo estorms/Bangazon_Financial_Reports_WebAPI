@@ -61,26 +61,30 @@ namespace BangazonFinancialReportsAPI
         //         }
 
         [HttpGet]
-        public async Task<IActionResult> ProductRevenue()
+        public IActionResult ProductRevenue()
         {
-
+            try {
 
             var BangazonRevenue = context.Revenue;
 
 
-            //group revenue items by ProductName to avoid duplicates
-            var ProductGrouper = from revenue in BangazonRevenue
-                                 group revenue by revenue.ProductName into groupedRevenueProductNames
-                                 where groupedRevenueProductNames.Count() >= 1
-                                 orderby groupedRevenueProductNames
-                                 select new { groupedRevenueProductNames.Key };
+                    //group revenue items by ProductName to avoid duplicates
+            //  var ProductGrouper = from revenue in BangazonRevenue
+            //                       group revenue by revenue.ProductName into groupedRevenueProductNames
+            //                       where groupedRevenueProductNames.Count() >= 1
+            //                       select new { groupedRevenueProductNames.Key };
 
 
+            var ProdsGrouper = from revenue in BangazonRevenue
+                    group revenue by revenue.ProductName into groupedProductNames
+                    where groupedProductNames.Count() >= 1
+                    // orderby groupedProductNames
+                    select new { groupedProductNames.Key, myCount = groupedProductNames.Count() };
 
             var RevenueGrouper = from revenue in BangazonRevenue
                                  group revenue by revenue.ProductCost into groupedRevenueProductCosts
                                  where groupedRevenueProductCosts.Count() >= 1
-                                 orderby Convert.ToInt32(groupedRevenueProductCosts)
+                                //  orderby Convert.ToInt32(groupedRevenueProductCosts)
                                  select new { groupedRevenueProductCosts.Key };
 
             // foreach(var p in ProductGrouper) {
@@ -99,16 +103,32 @@ namespace BangazonFinancialReportsAPI
 
 
 
-            return Ok(RevenueGrouper);
+            return Ok(ProdsGrouper);
         }
 
 
+    catch (Exception ex)
+    {
+        return NotFound();
+    }
+}
+            // foreach(var p in ProductGrouper) {
+            //     Console.WriteLine(p);
+            // }
+            // Get line items grouped by product id, including count
+
+            // Build list of Product instances for display in view
+            // model.ProductTypes = await (from type in context.ProductType
+            //         join a in counter on type.ProductTypeId equals a.Key 
+            //         select new ProductType {
+            //             ProductTypeId = type.ProductTypeId,
+            //             Label = type.Label, 
+            //             Quantity = a.myCount 
+            //         }).ToListAsync();
 
 
 
-
-
-
+        
 
 
         [HttpGet("{id}", Name = "GetIndividualRevenue")]
