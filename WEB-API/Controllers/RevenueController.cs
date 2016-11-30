@@ -61,7 +61,7 @@ namespace BangazonFinancialReportsAPI
         //         }
 
         [HttpGet]
-        public IActionResult ProductRevenue()
+        public async Task<IActionResult> ProductRevenue()
         {
 
 
@@ -72,6 +72,7 @@ namespace BangazonFinancialReportsAPI
             var ProductGrouper = from revenue in BangazonRevenue
                                  group revenue by revenue.ProductName into groupedRevenueProductNames
                                  where groupedRevenueProductNames.Count() >= 1
+                                 orderby groupedRevenueProductNames
                                  select new { groupedRevenueProductNames.Key };
 
 
