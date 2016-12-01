@@ -27,5 +27,8 @@ namespace BangazonFinancialReportsAPI
 
         public DateTime PurchaseDate { get; set; }
 
+        public int TimesPurchased { get; set; }
+
+        public int TotalRevenueGenerated { get; set; }
     }
 }
